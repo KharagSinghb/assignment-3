@@ -39,3 +39,18 @@ class ChequingAccount(Account):
             self.theBalance -= amount
             print(f"Withdrawn {amount}. New balance is {self.theBalance}")
 
+
+class SavingsAccount(Account):
+    def _init_(self, account_number, account_name, rate_interest, current_balance, minimum_balance):
+        super()._init_(account_number, account_name, rate_interest, current_balance)
+        self.minimumBalance = minimum_balance
+
+    def withdraw(self,amount):
+        if amount <=0:
+            print("Invalid amount")
+        elif self.theBalance - amount < self.minimumBalance:
+            print("Denied, you dont have enough money")
+        else:
+            self.theBalance -= amount
+            print(f"withdrawn {amount}. New balance is {self.theBalance}")
+            
