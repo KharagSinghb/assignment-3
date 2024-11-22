@@ -30,5 +30,12 @@ class ChequingAccount(Account):
         super()._init_(account_number,account_name,rate_interest,current_balance)
         self.overdraftLimit = overdraft_limit
 
-    
+    def withdraw(self,amount):
+        if amount <= 0:
+            print("Invalid amount")
+        elif self.theBalance - amount < -self.overdraftLimit:
+            print("Withdraw denied. Overdraft limit exceeded")
+        else:
+            self.theBalance -= amount
+            print(f"Withdrawn {amount}. New balance is {self.theBalance}")
 
