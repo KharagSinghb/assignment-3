@@ -13,6 +13,7 @@ class Account:
         self.theBalance
 
     def _init_(self,account_number,account_name,rate_interest,current_balance):
+
         self.accNumber = account_number
         self.accName = account_name
         self.rateInterest = rate_interest
@@ -23,3 +24,11 @@ class Account:
 
     def setAccountHolderName(self,name):
         self.accName = name
+
+class ChequingAccount(Account):
+    def _init_(self,account_number,account_name,rate_interest,current_balance, overdraft_limit):
+        super()._init_(account_number,account_name,rate_interest,current_balance)
+        self.overdraftLimit = overdraft_limit
+
+    
+
