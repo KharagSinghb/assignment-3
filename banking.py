@@ -60,4 +60,6 @@ class Bank:
         self.bankName = bank_name
         self.accounts = []
 
-    def 
+    def openAccount(self,account):
+        self.accounts.append(account)
+        print(f"Account opened for {account.getAccountHolderName()}")
