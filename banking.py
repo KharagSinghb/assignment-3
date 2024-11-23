@@ -25,6 +25,15 @@ class Account:
     def setAccountHolderName(self,name):
         self.accName = name
 
+    def deposit(self, amount):
+        if amount > 0:
+            self._currentBalance += amount
+            print(f"Deposited {amount}. New balance is {self._currentBalance}")
+        else:
+            print("Invalid deposit amount")
+
+            
+
 class ChequingAccount(Account):
     def _init_(self,account_number,account_name,rate_interest,current_balance, overdraft_limit):
         super()._init_(account_number,account_name,rate_interest,current_balance)
