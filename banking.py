@@ -1,82 +1,82 @@
 # the start
 class Account:
-    def getAccountNumber(self):
-        self.accNumber
-
-    def getAccountHolderName(self):
-        self.accName
-
-    def getRateOfInterest(self):
-        self.rateInterest
-
-    def GetCurrentBalance(self):
-        self.theBalance
-
-    def _init_(self,account_number,account_name,rate_interest,current_balance):
-
+    def __init__(self, account_number, account_name, rate_interest, current_balance):
         self.accNumber = account_number
         self.accName = account_name
         self.rateInterest = rate_interest
         self.theBalance = current_balance
 
-    def setRateofInterest(self,rate):
+    def getAccountNumber(self):
+        return self.accNumber
+
+    def getAccountHolderName(self):
+        return self.accName
+
+    def getRateOfInterest(self):
+        return self.rateInterest
+
+    def getCurrentBalance(self):
+        return self.theBalance
+
+    def setRateofInterest(self, rate):
         self.rateInterest = rate
 
-    def setAccountHolderName(self,name):
+    def setAccountHolderName(self, name):
         self.accName = name
 
     def deposit(self, amount):
         if amount > 0:
-            self._currentBalance += amount
-            print(f"Deposited {amount}. New balance is {self._currentBalance}")
+            self.theBalance += amount
+            print(f"Deposited {amount}. New balance is {self.theBalance}")
         else:
             print("Invalid deposit amount")
 
     def withdraw(self, amount):
         if amount <= 0:
             print("Invalid withdrawal amount")
-        elif amount > self._currentBalance:
+        elif amount > self.theBalance:
             print("Insufficient balance for withdrawal")
         else:
-            self._currentBalance -= amount
-            print(f"Withdrawn {amount}. New balance is {self._currentBalance}")           
+            self.theBalance -= amount
+            print(f"Withdrawn {amount}. New balance is {self.theBalance}")
+
 
 class ChequingAccount(Account):
-    def _init_(self,account_number,account_name,rate_interest,current_balance, overdraft_limit):
-        super()._init_(account_number,account_name,rate_interest,current_balance)
+    def __init__(self, account_number, account_name, rate_interest, current_balance, overdraft_limit):
+        super().__init__(account_number, account_name, rate_interest, current_balance)
         self.overdraftLimit = overdraft_limit
 
-    def withdraw(self,amount):
+    def withdraw(self, amount):
         if amount <= 0:
             print("Invalid amount")
         elif self.theBalance - amount < -self.overdraftLimit:
-            print("Withdraw denied. Overdraft limit exceeded")
+            print("Withdraw denied. Overdraft limit exceeded.")
         else:
             self.theBalance -= amount
             print(f"Withdrawn {amount}. New balance is {self.theBalance}")
 
 
 class SavingsAccount(Account):
-    def _init_(self, account_number, account_name, rate_interest, current_balance, minimum_balance):
-        super()._init_(account_number, account_name, rate_interest, current_balance)
+    def __init__(self, account_number, account_name, rate_interest, current_balance, minimum_balance):
+        super().__init__(account_number, account_name, rate_interest, current_balance)
         self.minimumBalance = minimum_balance
 
-    def withdraw(self,amount):
-        if amount <=0:
+    def withdraw(self, amount):
+        if amount <= 0:
             print("Invalid amount")
         elif self.theBalance - amount < self.minimumBalance:
-            print("Denied, you dont have enough money")
+            print("Withdrawal denied. Minimum balance requirement not met.")
         else:
             self.theBalance -= amount
-            print(f"withdrawn {amount}. New balance is {self.theBalance}")
+            print(f"Withdrawn {amount}. New balance is {self.theBalance}")
 
 
 class Bank:
-    def _init_(self, bank_name):
+    def __init__(self, bank_name):
         self.bankName = bank_name
         self.accounts = []
 
-    def openAccount(self,account):
+    def openAccount(self, account):
         self.accounts.append(account)
         print(f"Account opened for {account.getAccountHolderName()}")
 
@@ -84,31 +84,31 @@ class Bank:
         for account in self.accounts:
             if account.getAccountNumber() == account_number:
                 return account
-            else :
-                print("account not found")
+        print("Account not found")
+        return None
 
 
 class Application:
     def run(self):
-        bank = Bank('TD')
+        bank = Bank("TD Bank")
         while True:
             self.showMainMenu(bank)
 
-    def showMainMenu(self,bank):
-        print("Main menu")
+    def showMainMenu(self, bank):
+        print("\n===== Main Menu =====")
         print("1. Open Account")
-        print("2. search account")
+        print("2. Search Account")
         print("3. Exit")
-        choice = input("enter choice: ")
+        choice = input("Enter choice: ")
         if choice == "1":
-             self.openAccount(bank)
+            self.openAccount(bank)
         elif choice == "2":
             self.showAccountMenu(bank)
         elif choice == "3":
             print("Exiting the application.")
             exit()
         else:
-            print("Invalid choice. Please try again.")           
+            print("Invalid choice. Please try again.")
 
     def openAccount(self, bank):
         account_type = input("Enter account type (savings/chequing): ").lower()
