@@ -63,3 +63,14 @@ class Bank:
     def openAccount(self,account):
         self.accounts.append(account)
         print(f"Account opened for {account.getAccountHolderName()}")
+
+    def searchAccount(self, account_number):
+        for account in self.accounts:
+            if account.getAccountNumber() == account_number:
+                return account
+            else :
+                print("account not found")
+
+
+
+        
