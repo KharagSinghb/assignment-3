@@ -32,7 +32,14 @@ class Account:
         else:
             print("Invalid deposit amount")
 
-            
+    def withdraw(self, amount):
+        if amount <= 0:
+            print("Invalid withdrawal amount")
+        elif amount > self._currentBalance:
+            print("Insufficient balance for withdrawal")
+        else:
+            self._currentBalance -= amount
+            print(f"Withdrawn {amount}. New balance is {self._currentBalance}")           
 
 class ChequingAccount(Account):
     def _init_(self,account_number,account_name,rate_interest,current_balance, overdraft_limit):
