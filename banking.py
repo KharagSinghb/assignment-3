@@ -72,5 +72,73 @@ class Bank:
                 print("account not found")
 
 
+class Application:
+    def run(self):
+        bank = Bank('TD')
+        while True:
+            self.showMainMenu(bank)
 
-        
+    def showMainMenu(self,bank):
+        print("Main menu")
+        print("1. Open Account")
+        print("2. search account")
+        print("3. Exit")
+        choice = input("enter choice: ")
+        if choice == "1":
+             self.openAccount(bank)
+        elif choice == "2":
+            self.showAccountMenu(bank)
+        elif choice == "3":
+            print("Exiting the application.")
+            exit()
+        else:
+            print("Invalid choice. Please try again.")           
+
+    def openAccount(self, bank):
+        account_type = input("Enter account type (savings/chequing): ").lower()
+        account_number = input("Enter account number: ")
+        account_holder_name = input("Enter account holder name: ")
+        rate_of_interest = float(input("Enter rate of interest: "))
+        current_balance = float(input("Enter current balance: "))
+
+        if account_type == "savings":
+            minimum_balance = float(input("Enter minimum balance: "))
+            account = SavingsAccount(account_number, account_holder_name, rate_of_interest, current_balance, minimum_balance)
+        elif account_type == "chequing":
+            overdraft_limit = float(input("Enter overdraft limit: "))
+            account = ChequingAccount(account_number, account_holder_name, rate_of_interest, current_balance, overdraft_limit)
+        else:
+            print("Invalid account type. Account not created.")
+            return
+
+        bank.openAccount(account)
+
+    def showAccountMenu(self, bank):
+        account_number = input("Enter account number: ")
+        account = bank.searchAccount(account_number)
+
+        if account:
+            print("\n===== Account Menu =====")
+            print("1. Deposit")
+            print("2. Withdraw")
+            print("3. View Balance")
+            choice = input("Enter choice: ")
+
+            if choice == "1":
+                amount = float(input("Enter deposit amount: "))
+                account.deposit(amount)
+            elif choice == "2":
+                amount = float(input("Enter withdrawal amount: "))
+                account.withdraw(amount)
+            elif choice == "3":
+                print(f"Current balance: {account.getCurrentBalance()}")
+            else:
+                print("Invalid choice. Returning to main menu.")
+        else:
+            print("Account not found.")
+
+
+# Run the application
+if __name__ == "__main__":
+    app = Application()
+    app.run()
